@@ -1,10 +1,23 @@
 #include <iostream>
 
-#include <boost/asio.hpp>
+#ifdef _WIN32
+#define _WIN32_WINNT 0x0A00
+#endif
 
-using namespace std;
+#include <boost/asio.hpp>
+using namespace boost;
 
 int main() {
-  cout << "Project Init!" << endl;
+  
+  system::error_code ec;
+
+  // Context Platform Specific Interface
+  asio::io_context io_context;
+
+  // Perform IO Operations
+  asio::ip::tcp::socket socket(io_context);
+
+  // IP endpoint & Make Address so ASIO can recognize
+  asio::ip::tcp::endpoint endpoint(asio::ip::make_address("93.184.216.34", ec), 80);
   return 0;
 }
